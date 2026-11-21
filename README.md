@@ -6,20 +6,20 @@ Scenario skin: Busy Computer Laboratory / Print Station
 
 Story Kernel is a browser-based, game-style simulator of a simplified operating system. It shows the
 kernel (system calls, user/kernel mode, kernel log), processes (PCB, 5-state life cycle, parent-child,
-CPU and I/O bursts), threads (TCB, shared vs private resources) and CPU scheduling (FCFS, SJF,
+CPU and I/O bursts), threads (TCB, shared vs. private resources), and CPU scheduling (FCFS, SJF,
 Round Robin with adjustable quantum, Priority) with a live Gantt chart. The same simulation can be
-viewed as OS terms or as the Computer Laboratory / Print Station story (students send print jobs to one shared printer). Instructions are built into the page
+viewed in OS terms or as the Computer Laboratory / Print Station story (students send print jobs to one shared printer). Instructions are built into the page
 (click **How to play**).
 
 ## Features
 
 - Kernel: create_process, terminate, create_thread, join_thread, io_request, yield, deadlock_demo;
   User/Kernel mode badge; kernel log
-- Processes: PCB (PID, state, priority, arrival, burst, remaining, registers), 5-state life cycle,
+- Processes: PCB (PID, state, priority, arrival, burst, remaining, registers), 5-state life cycle
   parent-child, CPU and I/O bursts
-- Threads: TCB per thread, several threads per process, shared vs private resources shown
+- Threads: TCB per thread, several threads per process, shared vs. private resources shown
 - Scheduler: FCFS, SJF, Round Robin, Priority; live Gantt chart and ready queue; visible context
-  switches; average waiting, turnaround and response time; Start / Pause / Step / Reset
+  switches; average waiting, turnaround, and response time; Start / Pause / Step / Reset
 - Standout features: Scenario Skin (Story <-> OS), Dual View button, "Why?" explainer (click a Gantt
   block), Time Machine (rewind slider)
 - Your Ideas: three workload presets (balanced, CPU-heavy, I/O-heavy), one-click Benchmark of every
@@ -28,7 +28,7 @@ viewed as OS terms or as the Computer Laboratory / Print Station story (students
 ## Programming languages and versions
 
 - HTML5, CSS3 and JavaScript (ES2015+), plain and with no frameworks, libraries or build step.
-- A modern web browser. Tested in Chromium 141 (headless). Firefox, Safari and mobile browsers are not yet tested.
+- A modern web browser. Tested in Chromium 141 (headless). Firefox, Safari, and mobile browsers are not yet tested.
 - Optional: Visual Studio Code (with the Live Server extension) or Python 3 to serve the folder locally.
 - Internet is only needed for one Google Font (Nunito); the page falls back to system fonts offline.
 
@@ -58,13 +58,13 @@ Option 2 - serve locally:
     python3 -m http.server 8000
     # then open http://localhost:8000/ in a browser
 
-Option 3 - published link (a single-file copy of the same code, hosted as a claude.ai artifact; it is private until its owner chooses to share it):
-https://claude.ai/artifact/7VzMRLVWxcVboPGCzrZSVx
+Option 3 - published link (a single-file copy of the same code, hosted on GitHub; it is private until its owner chooses to share it):
+https://github.com/johncarlodiaday-netizen/MINI-OS.git
 
 
 ## Deployment
 
-The project is static files only. To host it, copy the whole folder to any static host (for example GitHub
+The project is static files only. To host it, copy the whole folder to any static host (for example, GitHub
 Pages: push the folder to a repository, then enable Pages in the repository settings).
 
 ## Files
@@ -93,12 +93,12 @@ Pages: push the folder to a repository, then enable Pages in the repository sett
   process ends. If no hole fits, the process waits in NEW and a MEMORY line appears in the log.
 - Process size = 8 KB code/heap + 4 KB per thread stack slot (threads + 2 spare slots).
 - The Memory panel shows the map, used/free KB, largest hole, fragmentation, and counters for timer
-  interrupts, I/O interrupts and system calls.
+  interrupts, I/O interrupts, and system calls.
 
 ## How to use (short)
 
 1. Press **Start** (or **Step** for one time unit).
-2. Change the algorithm, quantum, speed or workload at any time.
+2. Change the algorithm, quantum, speed, or workload at any time.
 3. Click a roster row, then use the system call buttons.
 4. Click a Gantt block to see why the scheduler chose it.
 5. Drag the Time Machine slider to rewind; press Start to replay.
