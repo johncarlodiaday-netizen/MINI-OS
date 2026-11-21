@@ -119,4 +119,4 @@ wait in NEW and are admitted as other processes finish.
   (including the story-text strings in `js/engine.js`, with no logic change), the documentation and the test scripts:
   built with AI assistance (Anthropic).
 
-The full log is in Section 11 of Story_Kernel_Documentation.pdf. The AVP script and storyboard are in a .docx file.
+The full log is in Section 11 of Story_Kernel_Documentation.pdf. 
