@@ -1,7 +1,10 @@
 # Story Kernel - A Scenario-Driven Mini-OS Simulator
 
 ITEC 55 - Platform Technologies, Cavite State University (Don Severino de las Alas Campus)
+
 Author: John Carlo B. Diaday and Samuel Vibar, BSIT 2-4 (Pair Project)
+
+
 Scenario skin: Busy Computer Laboratory / Print Station
 
 Story Kernel is a browser-based, game-style simulator of a simplified operating system. It shows the
