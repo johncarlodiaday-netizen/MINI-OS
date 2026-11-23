@@ -42,7 +42,7 @@ viewed in OS terms or as the Computer Laboratory / Print Station story (students
 3. Right-click `index.html` and choose **Open with Live Server** (or click "Go Live" at the bottom right).
 4. The simulator opens in your browser. Edit `js/app.js` or `css/style.css`, save, and the page reloads.
 
-Without the extension: open the VS Code terminal (Ctrl+)` and run `python3 -m http.server 8000`, then open http://localhost:8000/.
+Without the extension: open the VS Code terminal `(Ctrl+) and run `python3 -m http.server 8000`, then open http://localhost:8000/.
 
 ## Run it (exact commands)
 
