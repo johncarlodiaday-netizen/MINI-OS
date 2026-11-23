@@ -1,12 +1,8 @@
-/* ============================================================================
-   Story Kernel - css/effects.css
+/* 
    Adds on top of css/style.css (load it AFTER style.css):
      1 manual light / dark theme
      2 animations while the simulation runs
-   All motion is switched off for people who prefer reduced motion.
-   The animation classes (.busy, .enter, .pop, .flash, .switching, ...) are
-   added by js/fx.js after every render.
-   ============================================================================ */
+ */
 
 /* ---------- 1. Themes ---------- */
 /* header gradient colours (light = sky blue, dark = deep blue) */
