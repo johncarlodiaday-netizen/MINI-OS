@@ -1,21 +1,17 @@
-/* ============================================================================
+/* 
    Story Kernel - js/app.js
    User interface: controls, the Time Machine and rendering.
    Skin: Busy Computer Laboratory / Print Station.
-   ITEC 55 Platform Technologies, Cavite State University.
-   Author / submitter: John Carlo B. Diaday, BSIT 2-4.
-   Interface built with AI assistance (Claude); see the AI-Use Disclosure in the manual.
-
-   This file never changes a process by itself. It calls the engine (js/engine.js)
+   It calls the engine (js/engine.js)
    and r() only draws the state object S.
-   ============================================================================ */
+ */
 'use strict';
 
 const $ = id => document.getElementById(id);
 
-/* ---------------------------------------------------------------------------
+/* 
    1. Label dictionaries (OS view and Story view)
-   --------------------------------------------------------------------------- */
+*/
 const ST = {
   os:    { NEW: 'NEW', READY: 'READY', RUNNING: 'RUNNING', WAITING: 'WAITING', TERMINATED: 'TERMINATED' },
   story: { NEW: 'Submitting', READY: 'In queue', RUNNING: 'Printing', WAITING: 'At scanner', TERMINATED: 'Collected' }
@@ -39,13 +35,13 @@ const LB = {
 
 const WHY_HINT = 'Click any block in the chart to see why the scheduler chose it.';
 
-/* ---------------------------------------------------------------------------
+/* 
    2. Application state
       S    simulation state (owned by the engine)
       H    history for the Time Machine: one JSON snapshot of S per time unit
       V    current view: 'os' or 'story'
       sel  pid selected in the roster
-   --------------------------------------------------------------------------- */
+*/
 let S, H;
 let V = 'os';
 let sel = 1;
@@ -53,21 +49,21 @@ let timer = null;
 let algo = 'RR';
 let quant = 3;
 let wl = 'bal';
-let whyIndex = null;                        // Gantt block whose Why? text is on screen
+let whyIndex = null;                        
 
 /** A stable colour for each process id (grey when the CPU is idle). */
 const col = pid => (pid ? `hsl(${pid * 67 % 360},75%,60%)` : '#6b7199');
 
-/** Stores the current state as the snapshot of the current time unit and redraws. */
+/** Stores the current state as the snapshot (A photo of the entire system) of the current time unit and redraws. */
 function save() {
   H.length = S.t + 1;
   H[S.t] = JSON.stringify(S);
   r();
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    3. Actions: tick loop, system calls, deadlock recovery
-   --------------------------------------------------------------------------- */
+*/
 function deadlockIsFinal() {
   const nothingCanRun = !S.run && !S.q.length;
   const noFutureWork = !S.ps.some(p => p.state === 'NEW' || (p.state === 'WAITING' && !p.wl));
@@ -78,7 +74,7 @@ function deadlockIsFinal() {
 function tick() {
   S.algo = algo;
   S.quantum = quant;
-  H.length = S.t + 1;                       // replaying from the past discards the future
+  H.length = S.t + 1;                       // replaying from the past, disregard the future.
   const more = step(S);
   H[S.t] = JSON.stringify(S);
   if (!more || deadlockIsFinal()) pause();
@@ -154,9 +150,9 @@ function explain(i) {
   $('why').textContent = `t=${g.t}: ` + text;
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    4. Wiring of the controls
-   --------------------------------------------------------------------------- */
+*/
 $('bS').onclick = () => { pause(); start(); };
 $('bP').onclick = pause;
 $('bT').onclick = () => { pause(); tick(); };
@@ -198,9 +194,9 @@ document.querySelectorAll('[data-close]').forEach(b => {
   b.onclick = () => b.closest('dialog').close();
 });
 
-/* ---------------------------------------------------------------------------
+/* 
    5. Rendering, r(): reads S and never changes it
-   --------------------------------------------------------------------------- */
+*/
 function r() {
   const L = LB[V];
   const os = V === 'os';
@@ -332,12 +328,12 @@ function renderMemory(say, os, P) {
     `${say('I/O', 'scanner done')} ${S.irq.io} · ${say('system calls', 'requests')} ${S.irq.sys}</small>`;
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    6. Start-up
-   --------------------------------------------------------------------------- */
+*/
 reset();
 try {
-  if (!sessionStorage.seen) {                 // show "How to play" on the first visit only
+  if (!sessionStorage.seen) {                 // "How to play" 
     sessionStorage.seen = 1;
     $('hp').showModal();
   }
