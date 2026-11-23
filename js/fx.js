@@ -1,15 +1,8 @@
-/* ============================================================================
+/* 
    Story Kernel - js/fx.js
    Light / dark theme toggle and the animations that play while the
    simulation runs.
-
-   Load order in index.html: engine.js, app.js, then this file.
-
-   This file never changes the simulation. It wraps r() (the renderer in
-   app.js) and, after every render, decorates the DOM that r() just drew:
-   it compares the new state S with the previous one and adds CSS classes
-   (see css/effects.css) for whatever changed.
-   ============================================================================ */
+ */
 'use strict';
 
 (function () {
@@ -17,9 +10,9 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const systemDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-  /* -------------------------------------------------------------------------
+  /* 
      1. Theme: light / dark (saved in localStorage; first visit follows the system)
-     ------------------------------------------------------------------------- */
+  */
   const themeButton = $('bM');
 
   const currentTheme = () => root.dataset.theme || (systemDark.matches ? 'dark' : 'light');
@@ -40,10 +33,10 @@
   systemDark.addEventListener('change', paintThemeButton);
   paintThemeButton();
 
-  /* -------------------------------------------------------------------------
+  /* 
      2. "Running" indicator (moving strip on top, breathing Start button)
         `timer` is the interval id owned by app.js.
-     ------------------------------------------------------------------------- */
+   */
   function syncRunning() {
     document.body.classList.toggle('running', typeof timer !== 'undefined' && timer !== null);
   }
@@ -52,9 +45,9 @@
   document.querySelector('nav').addEventListener('change', later);
   $('tm').addEventListener('input', later);
 
-  /* -------------------------------------------------------------------------
+  /* 
      3. Render hook: animate whatever changed since the last render
-     ------------------------------------------------------------------------- */
+  */
   const prev = {
     ready: false,      // false until the first decorate() has recorded a baseline
     t: 0, glen: 0, cs: 0,
