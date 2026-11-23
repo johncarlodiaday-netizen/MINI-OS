@@ -1,6 +1,4 @@
-/* Story Kernel - styles (skin: Busy Computer Laboratory / Print Station)
-   Sky-blue theme with a deep-blue dark mode (prefers-color-scheme).
-   Sections: 1 theme | 2 base | 3 layout | 4 controls | 5 panels | 6 Gantt, log, memory | 7 dialogs */
+/* Sections: 1 theme | 2 base | 3 layout | 4 controls | 5 panels | 6 Gantt, log, memory | 7 dialogs */
 
 /* ---------- 1. Theme ---------- */
 :root {
@@ -56,7 +54,6 @@ td, th {
 th { color: var(--ac2); }
 
 /* ---------- 3. Layout ---------- */
-/* header: logo + wordmark on the left, status pill on the right */
 header {
   display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
   padding: 14px 22px 30px;
