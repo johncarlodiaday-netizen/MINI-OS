@@ -1,23 +1,8 @@
-/* ============================================================================
-   Story Kernel - js/engine.js (skin: Busy Computer Laboratory / Print Station)
+/* 
    Core logic: the simulated operating system.
 
    The engine works only on the state object S. It never touches the page;
    app.js renders S and calls the functions below.
-
-   Public contract (names are used by app.js and by Appendix B of the manual):
-     W, WN, ALG                          workload presets, workload names, algorithm names
-     mk(workload, algo, quantum)  -> S   boot
-     addP(S, name, arr, pri, segs, threads, ppid) -> pcb
-     step(S)                      -> bool  one clock tick (false when all processes are done)
-     pick(S)                      -> pcb   scheduler decision, writes a "Why" entry
-     alloc(S, p) / freeMem(S, pid)         first-fit allocation / free + coalescing
-     rel(S, pid)                           free memory and locks of a finished process
-     detect(S) / breakDeadlock(S)          wait-for cycle detection / recovery
-     met(S)                       -> {wt, tat, rt}
-     run() / cur()                         running PCB / selected PCB (use globals S, sel)
-     SYS[0..6]                             the seven system calls
-     lg(S, osText, storyText)              every log line (both views keep working)
 
    State S is plain JSON so the Time Machine can snapshot it:
      t, algo, quantum, mode ('K' | 'U'), ps[], q[] (pids), run (pid or 0), qleft,
@@ -31,12 +16,12 @@
      irq    interrupt counters {timer, io, sys}
 
    S and sel are globals owned by app.js; they are not declared here.
-   ============================================================================ */
+ */
 'use strict';
 
-/* ---------------------------------------------------------------------------
+/* 
    1. Constants, workloads and names
-   --------------------------------------------------------------------------- */
+*/
 const KERNEL_KB = 64;     // KB 0-63 reserved for the kernel
 const USER_KB = 256;      // KB 64-319 for user processes
 const IO_UNITS = 3;       // length of an I/O wait started by the io_request system call
@@ -65,7 +50,7 @@ const W = {
     ["Ella's Report", 4, 4, [1, 5, 1], 2]
   ]
 };
-/** Story names of the two locks (used only in Story-view log text). */
+/** Story names of the two locks. */
 const LOCK_STORY = { L1: 'paper tray', L2: 'stapler' };
 const WN = { bal: 'Balanced (mixed)', cpu: 'CPU-heavy', io: 'I/O-heavy' };
 const ALG = { FCFS: 'FCFS', SJF: 'SJF (lowest wait)', RR: 'Round Robin', PRI: 'Priority' };
@@ -88,9 +73,9 @@ function workloadKey(key) {
   return 'bal';
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    2. Small helpers
-   --------------------------------------------------------------------------- */
+*/
 /** Writes one kernel log line in both vocabularies (OS text, Story text). */
 function lg(S, osText, storyText) {
   S.log.push({ t: S.t, o: osText, s: storyText || osText });
@@ -106,9 +91,9 @@ const run = () => (S.run ? byPid(S, S.run) : null);
 /** The process selected in the roster (for system calls and the Threads panel). */
 const cur = () => byPid(S, sel) || S.ps[0];
 
-/* ---------------------------------------------------------------------------
+/* 
    3. Boot, PCB and TCB
-   --------------------------------------------------------------------------- */
+*/
 /** Boots the simulator in kernel mode with every workload process in state NEW. */
 function mk(workload, algo = 'RR', quantum = 3) {
   const list = Array.isArray(workload) ? workload : W[workloadKey(workload)];
@@ -153,9 +138,9 @@ function addP(S, name, arr, pri, segs, threads, ppid) {
   return p;
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    4. Memory: first fit with splitting, free with coalescing
-   --------------------------------------------------------------------------- */
+*/
 /** Gives p the first hole that is big enough. Returns false if there is none. */
 function alloc(S, p) {
   const i = S.mem.findIndex(block => !block.o && block.s >= p.mem);
@@ -184,9 +169,9 @@ function freeMem(S, pid) {
   }
 }
 
-/* ---------------------------------------------------------------------------
+/*
    5. Locks: release and hand over
-   --------------------------------------------------------------------------- */
+*/
 /** Frees the memory and the locks of a finished process; waiting processes get the locks. */
 function rel(S, pid) {
   const p = byPid(S, pid);
@@ -221,9 +206,9 @@ function kill(S, p) {
   rel(S, p.pid);
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    6. Scheduler decision
-   --------------------------------------------------------------------------- */
+*/
 /** Chooses the next PCB from S.q by S.algo and records a Why entry. The caller dispatches it. */
 function pick(S) {
   const algo = algoKey(S.algo);
@@ -252,9 +237,9 @@ function pick(S) {
   return p;
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    7. Deadlock detection and recovery
-   --------------------------------------------------------------------------- */
+*/
 /** Follows process -> lock it waits on -> owner ... Returns the pids if it comes back to start. */
 function waitCycleFrom(S, start) {
   const chain = [];
@@ -297,11 +282,11 @@ function breakDeadlock(S) {
   detect(S);
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    8. One clock tick, step(S)
       order: finished I/O, arrivals, RR preemption, dispatch, waiting time,
              execute one unit (+ lock request, burst end), deadlock check, t + 1
-   --------------------------------------------------------------------------- */
+*/
 function step(S) {
   if (allTerminated(S)) return false;
 
@@ -460,9 +445,9 @@ function endOfBurst(S, p) {
         `${p.name} goes to the scanner.`);
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    9. Metrics (averages over finished processes, as strings with 2 decimals)
-   --------------------------------------------------------------------------- */
+*/
 function met(S) {
   const done = S.ps.filter(p => p.state === 'TERMINATED' && p.fin >= 0);
   const avg = value => (done.length ? done.reduce((sum, p) => sum + value(p), 0) / done.length : 0).toFixed(2);
@@ -473,9 +458,9 @@ function met(S) {
   };
 }
 
-/* ---------------------------------------------------------------------------
+/* 
    10. System calls (use the globals S and sel; app.js counts irq.sys and sets mode 'K')
-   --------------------------------------------------------------------------- */
+*/
 const SYS = [
   /* 0 */ function create_process() {
     const p = cur();
