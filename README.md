@@ -4,7 +4,7 @@ ITEC 55 - Platform Technologies, Cavite State University (Don Severino de las Al
 
 Author: John Carlo B. Diaday and Samuel Vibar, BSIT 2-4 (Pair Project)
 
-##Click this URL link to RUN DIRECTLY ON OUR PROGRAM
+## Click this URL link to RUN DIRECTLY ON OUR PROGRAM
 
 https://print-station-kernel-os.vercel.app/
 
