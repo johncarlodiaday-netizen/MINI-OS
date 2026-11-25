@@ -2,10 +2,9 @@
 
 ITEC 55 - Platform Technologies, Cavite State University (Don Severino de las Alas Campus)
 
-Author: John Carlo B. Diaday and Samuel Vibar, BSIT 2-4 (Pair Project)
+Authors: John Carlo B. Diaday and Samuel Vibar, BSIT 2-4 (Pair Project)
 
-## Click this URL link to RUN DIRECTLY ON OUR PROGRAM
-
+## CLICK THIS URL LINK TO RUN DIRECTLY ON OUR PROGRAM
 https://print-station-kernel-os.vercel.app/
 
 
@@ -77,7 +76,7 @@ Pages: push the folder to a repository, then enable Pages in the repository sett
 ## Vercel
 
 The folder is a plain static site. Push it to the GitHub repository above, then in Vercel choose Add New > Project, import
-the repository, keep Framework Preset on Other, leave Build Command empty and deploy. Every later push redeploys it.
+the repository, keep Framework Preset on Other, leave Build Command empty, and deploy. Every later push redeploys it.
 
 ## Files
 
