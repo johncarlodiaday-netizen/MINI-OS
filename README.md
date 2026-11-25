@@ -131,7 +131,7 @@ wait in NEW and are admitted as other processes finish.
 
 - `js/engine.js` (core logic): the logic was written by John Carlo B. Diaday and Samuel Vibar.
 - `index.html`, `css/style.css`, `js/app.js`, the story wording of the Computer Laboratory / Print Station skin
-  (including the story-text strings in `js/engine.js`, with no logic change), the documentation and the test scripts:
+  (including the story-text strings in `js/engine.js`, with no logic change), the test scripts:
   built with AI assistance (Anthropic).
 
 The full log is in Section 11 of Story_Kernel_Documentation.pdf. 
